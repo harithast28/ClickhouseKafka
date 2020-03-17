@@ -8,7 +8,7 @@ import random
 def generate_data():
 
     message = {
-        'uesrId': random.randint(0, 200),
+        'userId': random.randint(0, 200),
         'name': "pickachu",
         'value': random.randint(0, 10)
     }
@@ -24,7 +24,7 @@ def publish_message(producer_instance, topic_name, data):
 
     try:
         for key, value in data.items():
-            producer_instance.send('json-topic', {key: value})
+            producer_instance.send('jsontopic', {key: value})
             producer_instance.flush()
             print('Message published successfully.')
     except Exception as E:
@@ -52,7 +52,7 @@ def main():
         if data:
             print("CONNECTING PRODUCER")
             kafka_producer = connect_kafka_producer()
-            publish_message(kafka_producer, 'my-units', data)
+            publish_message(kafka_producer, 'jsontopic', data)
             if kafka_producer is not None:
                 kafka_producer.close()
             else:

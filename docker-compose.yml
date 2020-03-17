@@ -25,7 +25,7 @@ services:
       - ./shared/ch-data/kafka:/data
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.43
+      KAFKA_ADVERTISED_HOST_NAME: localhost
     links:
      - zookeeper
     ports:

@@ -1,4 +1,14 @@
 # ClickhouseKafka
 
 Just do a docker-compose up to get it started. 
-modify the KAFKA_ADVERTISED_HOST_NAME in docker-compose.yml to match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
+
+# To Run Clickhouse Server
+
+docker exec -it <container_id_for_clickhouse_server> bash
+
+# To Run Clickhouse Client 
+
+docker exec -it <container_id_for_clickhouse_server> clickhouse-client mn 
+
+You can run the queries in here. 
+

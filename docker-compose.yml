@@ -11,6 +11,8 @@ services:
       - kafka
     links:
       - kafka
+    ports:
+      - 9000:9000
 
   clickhouse-client:
     image: yandex/clickhouse-client
@@ -25,7 +27,7 @@ services:
       - ./shared/ch-data/kafka:/data
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
     links:
      - zookeeper
     ports:

@@ -118,6 +118,7 @@
             <host>zookeeper</host>
             <port>2181</port>
         </node>
+        <identity>user:password</identity>
     </zookeeper>
 
      <!-- Listen wildcard address to allow accepting connections from other containers and host network. -->

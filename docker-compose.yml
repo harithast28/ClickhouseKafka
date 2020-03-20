@@ -39,7 +39,7 @@ services:
       - kafka
     ports:
       - 8123:8123
-      - 9009:9009
+      - 9001:9000
     networks:
       - "intranet"
 
@@ -51,6 +51,8 @@ services:
       - clickhouse-server
     command:
       - infinity
+    links:
+      - kafka
     ports:
       - 9000:9000
     networks:

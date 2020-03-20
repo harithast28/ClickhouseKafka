@@ -7,7 +7,7 @@
           <internal_replication>true</internal_replication>
     			<replica>
     				<host>clickhouse-server</host>
-    				<port>9009</port>
+    				<port>9000</port>
     			</replica>
     		</shard>
     	</cluster_1>

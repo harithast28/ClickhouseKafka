@@ -9,7 +9,7 @@
     </logger>
 
     <http_port>8123</http_port>
-    <tcp_port>9000</tcp_port>
+    <tcp_port>9009</tcp_port>
 
     <openSSL>
         <server>
@@ -66,10 +66,6 @@
     </query_log>
 
     <dictionaries_config>*_dictionary.xml</dictionaries_config>
-
-    <compression incl="clickhouse_compression">
-
-    </compression>
 
     <distributed_ddl>
         <path>/clickhouse/task_queue/ddl</path>

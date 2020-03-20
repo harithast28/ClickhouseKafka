@@ -1,40 +1,67 @@
 version: "3.6"
 
 services:
+  zookeeper:
+    image: zookeeper
+    # volumes:
+    #   - ./shared/ch-data/zookeeper:/data
+    ports:
+      - 2181:2181
+    networks:
+      - "intranet"
+
+  kafka:
+    image: wurstmeister/kafka:2.11-1.0.2
+    # volumes:
+    #   - ./shared/ch-data/kafka:/data
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: 79.51.153.252
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper
+    ports:
+      - 9092:9092
+      - 9094:9094
+    networks:
+      - "intranet"
+
   clickhouse-server:
     image: yandex/clickhouse-server
     volumes:
       - ./clickhouse/config.xml:/etc/clickhouse-server/config.xml
-      - ./clickhouse/zookeeper-servers.xml:/etc/clickhouse-server/conf.d/zookeeper-servers.xml
-      - ./shared/ch-data/clickhouse:/var/lib/clickhouse
+      - ./clickhouse/clickhouse_metrika.xml:/etc/clickhouse-server/metrika.xml
+      # - ./shared/ch-data/clickhouse:/var/lib/clickhouse
     depends_on:
       - kafka
     links:
       - kafka
+    ports:
+      - 8123:8123
+      - 9009:9009
+    networks:
+      - "intranet"
 
   clickhouse-client:
     image: yandex/clickhouse-client
     entrypoint:
       - /bin/sleep
+    depends_on:
+      - clickhouse-server
     command:
       - infinity
-
-  kafka:
-    image: wurstmeister/kafka:2.11-1.0.2
-    volumes:
-      - ./shared/ch-data/kafka:/data
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-    links:
-     - zookeeper
     ports:
-     - 9092:9092
-     - 9094:9094
+      - 9000:9000
+    networks:
+      - "intranet"
 
-  zookeeper:
-    image: zookeeper
-    volumes:
-      - ./shared/ch-data/zookeeper:/data
-    ports:
-      - 2181:2181
+volumes:
+  # zookeeper:
+  clickhouse-server:
+  # kafka:
+
+networks:
+  intranet:
+    name: "intranet"
+    driver: "bridge"
